@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Run check.js</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+        body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;line-height:1.4;padding:20px}
+        pre{background:#f4f4f4;padding:10px;border-radius:6px;overflow:auto}
+        button{margin-top:10px}
+    </style>
+</head>
+<body>
+    <h1>check.js runner</h1>
+    <div id="status">Waiting to load check.js…</div>
+    <pre id="output"></pre>
+    <button id="runBtn">Run check.js</button>
+
+    <!-- Load your check.js from the same folder -->
+    <script src="check.js"></script>
+
+    <script>
+        // Minimal runner: tries common entry names and reports results/errors.
+        function append(text){
+            const out = document.getElementById('output');
+            out.textContent += text + '\n';
+        }
+
+        async function tryRun(){
+            document.getElementById('status').textContent = 'Running…';
+            document.getElementById('output').textContent = '';
+            try {
+                // Prefer explicit entry points if your check.js exposes them:
+                if (typeof window.runCheck === 'function') {
+                    append('Calling window.runCheck()');
+                    const r = window.runCheck();
+                    append('Result: ' + (r instanceof Promise ? await r : r));
+                } else if (typeof window.check === 'function') {
+                    append('Calling window.check()');
+                    const r = window.check();
+                    append('Result: ' + (r instanceof Promise ? await r : r));
+                } else if (typeof window.default === 'function') {
+                    append('Calling window.default()');
+                    const r = window.default();
+                    append('Result: ' + (r instanceof Promise ? await r : r));
+                } else {
+                    append('Loaded check.js but no runnable function found (runCheck, check, or default).');
+                }
+                document.getElementById('status').textContent = 'Finished';
+            } catch (err) {
+                append('Error: ' + (err && err.stack ? err.stack : String(err)));
+                document.getElementById('status').textContent = 'Error';
+                console.error(err);
+            }
+        }
+
+        document.getElementById('runBtn').addEventListener('click', tryRun);
+
+        // Auto-run after load
+        window.addEventListener('load', () => {
+            document.getElementById('status').textContent = 'check.js loaded (if present).';
+            tryRun();
+        });
+    </script>
+</body>
+</html>
