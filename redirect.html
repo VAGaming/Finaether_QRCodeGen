@@ -29,10 +29,10 @@
         const age = (now - t) / 1000; // seconds
 
         if (age <= 30) {
-          status.textContent = "QR is fresh. Redirecting to Google...";
+          status.textContent = "QR is fresh.";
           window.location.href = "https://www.google.com";
         } else {
-          status.textContent = "QR expired. Redirecting to YouTube...";
+          status.textContent = "QR expired.";
           window.location.href = "https://www.youtube.com";
         }
       }

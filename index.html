@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>QR Generator with Timestamp Redirect</title>
+    <title>QR Generator</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -37,9 +37,9 @@
     </style>
   </head>
   <body>
-    <h1>QR Code with Timestamp Redirect</h1>
+    <h1>QR Code</h1>
     <img id="qrcode" src="" alt="QR Code" width="200" height="200" />
-    <p>Next QR code in <span id="timer">30</span>s</p>
+    <p>QR Code tiếp theo trong: <span id="timer">30</span>s</p>
     <p id="link"></p>
 
     <script>
@@ -56,7 +56,6 @@
         )}`;
 
         qrcode.src = qrUrl;
-        linkDisplay.innerHTML = `<a href="${redirectUrl}" target="_blank">${redirectUrl}</a>`;
         console.log(`Generated QR for: ${redirectUrl}`);
       }
 
@@ -70,8 +69,6 @@
           timer.textContent = countdown;
         }, 1000);
       }
-
-      // Initialize
       generateQRCode();
       startCountdown();
     </script>
