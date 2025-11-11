@@ -27,3 +27,21 @@ h1 {
   margin-top: 10px;
   color: #00ccff;
 }
+img {
+  width: 500px;
+  height: 500px;
+}
+
+@media (max-width: 768px) {
+  img {
+    width: 300px;
+    height: 300px;
+  }
+}
+
+@media (max-width: 480px) {
+  img {
+    width: 200px;
+    height: 200px;
+  }
+}
