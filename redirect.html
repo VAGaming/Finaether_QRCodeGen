@@ -4,38 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>QR Redirect</title>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background: #f9f9f9;
-        padding: 50px;
-      }
-    </style>
+    <link rel="stylesheet" href="redirect.css" />
   </head>
   <body>
     <h1>Checking QR timestamp...</h1>
     <p id="status"></p>
 
-    <script>
-      const params = new URLSearchParams(window.location.search);
-      const t = parseInt(params.get("t"), 10);
-      const status = document.getElementById("status");
-
-      if (!t) {
-        status.textContent = "Invalid QR code — missing timestamp.";
-      } else {
-        const now = Date.now();
-        const age = (now - t) / 1000; // seconds
-
-        if (age <= 30) {
-          status.textContent = "QR is fresh.";
-          window.location.href = "https://www.google.com";
-        } else {
-          status.textContent = "QR expired.";
-          window.location.href = "https://www.youtube.com";
-        }
-      }
-    </script>
+    <script src="redirect.js"></script>
   </body>
 </html>
